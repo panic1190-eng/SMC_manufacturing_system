@@ -3,6 +3,7 @@ import { Card, Field, Notice, Num } from '../ui'
 import { exportJSON, importJSON, resetDB, update, useDB } from '../store'
 import { download } from '../util'
 import type { Settings } from '../types'
+import { APP_VERSION } from '../App'
 
 const ROWS: { key: keyof Settings; label: string; unit: string; src: string }[] = [
   { key: 'storageTempMaxC', label: '시트 보관 온도 상한', unit: '℃', src: '시트 관리 수칙(40℃)과 시트관리가이드(30℃)가 상충 — 결정 필요' },
@@ -166,7 +167,7 @@ export default function Rules() {
         </div>
       </Card>
 
-      <Card title="공식 배포 센터 · 최신 파일 다운로드 (v0.4.1)">
+      <Card title={`공식 배포 센터 · 최신 파일 다운로드 (${APP_VERSION})`}>
         <p className="mute" style={{ marginBottom: 12 }}>
           본 시스템의 공식 배포 사이트, 단일 실행 파일(한국어/영문) 다운로드 및 최신 버전 릴리즈 노트를 확인합니다.
         </p>
@@ -178,10 +179,10 @@ export default function Rules() {
             ▲ Vercel 클라우드 라이브 접속
           </a>
           <a href="./SMC_system.html" download="SMC_system.html" className="btn" style={{ textDecoration: 'none' }}>
-            📥 한국어 단독 파일 다운로드 (v0.4.1)
+            📥 한국어 단독 파일 다운로드 ({APP_VERSION})
           </a>
           <a href="./SMC_system_EN.html" download="SMC_system_EN.html" className="btn" style={{ textDecoration: 'none' }}>
-            📥 English Edition Download
+            📥 English Edition Download ({APP_VERSION})
           </a>
           <a href="https://panic1190-eng.github.io/SMC_manufacturing_system/" target="_blank" className="btn" style={{ textDecoration: 'none' }}>
             ☁️ GitHub Pages 라이브 접속

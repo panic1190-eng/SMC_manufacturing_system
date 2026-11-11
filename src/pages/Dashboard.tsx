@@ -2,6 +2,7 @@ import { Badge, Card, Notice } from '../ui'
 import { update, uid, useDB } from '../store'
 import { fmt, lotState, recipeName, statusLabel } from '../util'
 import { computeSetting, glassFraction, pasteSG, recipeCostPerKg } from '../engine/calc'
+import { APP_VERSION } from '../App'
 
 export default function Dashboard() {
   const db = useDB()
@@ -215,8 +216,11 @@ export default function Dashboard() {
             <div className="brand-mark" style={{ width: 46, height: 46, fontSize: 15 }}>SMC</div>
           )}
           <div>
-            <div className="doc-sub">ENTERPRISE SMC MES & R&D SUITE · {db.settings.siteCode} PLANT</div>
-            <h2 className="doc-title">{db.settings.companyName || 'SMC 통합 기술·생산·품질관리 시스템'}</h2>
+            <div className="doc-sub">ENTERPRISE SMC MES & R&D SUITE · {db.settings.siteCode} PLANT · {APP_VERSION}</div>
+            <h2 className="doc-title" style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+              <span>{db.settings.companyName || 'SMC 통합 기술·생산·품질관리 시스템'}</span>
+              <span style={{ fontSize: 13, background: 'linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%)', color: '#fff', border: '1px solid #60a5fa', padding: '2px 9px', borderRadius: 6, fontWeight: 800, letterSpacing: '0.02em', boxShadow: '0 2px 8px rgba(37,99,235,0.3)' }}>{APP_VERSION}</span>
+            </h2>
           </div>
         </div>
         <div className="row">

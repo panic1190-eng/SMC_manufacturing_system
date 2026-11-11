@@ -3,7 +3,7 @@ import { update, useDB } from './store'
 import { ENGINE_VERSION } from './engine/calc'
 import { translateText, useDomTranslator, useLang } from './i18n'
 
-export const APP_VERSION = 'v0.4.2'
+export const APP_VERSION = 'v0.5.0'
 import Dashboard from './pages/Dashboard'
 import Materials from './pages/Materials'
 import Recipes from './pages/Recipes'
@@ -214,6 +214,10 @@ export default function App() {
   const hasUser = db.user.trim().length > 0
   const tx = (s: string) => (lang === 'en' ? translateText(s) : s)
 
+  useEffect(() => {
+    document.title = `${tx(cur.name)} — SMC 기술·생산관리 시스템 [${APP_VERSION}]`
+  }, [cur, lang])
+
   return (
     <div className="app" ref={appRef}>
       <nav className="side">
@@ -229,7 +233,10 @@ export default function App() {
             <div className="brand-mark">SMC</div>
           )}
           <div className="brand-text">
-            <h1>{tx(db.settings.companyName || 'SMC 기술·생산관리')}</h1>
+            <h1 style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+              <span>{tx(db.settings.companyName || 'SMC 기술·생산관리')}</span>
+              <span style={{ fontSize: 10, background: '#1e40af', color: '#93c5fd', border: '1px solid #3b82f6', padding: '1px 5px', borderRadius: 4, fontWeight: 800 }}>{APP_VERSION}</span>
+            </h1>
             <span>{tx(db.settings.companyLogo ? '로고 클릭 시 변경' : '+ 클릭하여 회사 로고 등록')}</span>
           </div>
           <input
@@ -301,20 +308,20 @@ export default function App() {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: 7,
-                background: 'linear-gradient(135deg, rgba(37, 99, 235, 0.18) 0%, rgba(30, 58, 138, 0.28) 100%)',
-                border: '1px solid rgba(96, 165, 250, 0.45)',
-                color: '#93c5fd',
-                padding: '5px 12px',
+                background: 'linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%)',
+                border: '1.5px solid #60a5fa',
+                color: '#ffffff',
+                padding: '5px 13px',
                 borderRadius: 999,
                 fontSize: 12.5,
-                fontWeight: 700,
+                fontWeight: 800,
                 textDecoration: 'none',
-                letterSpacing: '0.03em',
-                boxShadow: '0 2px 10px rgba(37, 99, 235, 0.25)',
+                letterSpacing: '0.02em',
+                boxShadow: '0 2px 10px rgba(37, 99, 235, 0.45)',
               }}
             >
-              <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#10b981', boxShadow: '0 0 8px #10b981' }} />
-              <span>{APP_VERSION}</span>
+              <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#4ade80', boxShadow: '0 0 10px #4ade80' }} />
+              <span>VERSION {APP_VERSION}</span>
             </a>
             <div className="seg-tabs" style={{ padding: 3, borderRadius: 999 }}>
               <button
