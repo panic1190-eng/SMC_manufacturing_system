@@ -835,7 +835,7 @@ export default function Production() {
 
       {/* 인쇄 전용 A4 SMC 일일 생산일지 (빈 양식 또는 작성된 일지) */}
       <section className="card printable printonly prod-print-sheet">
-        <div className="doc-banner" style={{ marginBottom: 8, paddingBottom: 8 }}>
+        <div className="doc-banner" style={{ marginBottom: 4, paddingBottom: 4 }}>
           <div className="doc-brand">
             {db.settings.companyLogo ? (
               <img src={db.settings.companyLogo} alt="logo" className="doc-logo" />
@@ -843,7 +843,7 @@ export default function Production() {
               <div className="brand-mark">SMC</div>
             )}
             <div>
-              <div className="doc-title" style={{ fontSize: 18 }}>SMC 일일 생산일지 {isBlankPrint ? '(현장 기록용 양식)' : ''}</div>
+              <div className="doc-title" style={{ fontSize: 16 }}>SMC 일일 생산일지 {isBlankPrint ? '(현장 기록용 양식)' : ''}</div>
               <div className="doc-sub">{db.settings.companyName} · Daily Production Log</div>
             </div>
           </div>
@@ -852,14 +852,14 @@ export default function Production() {
               <tr><th>작성</th><th>검토</th><th>승인</th></tr>
             </thead>
             <tbody>
-              <tr><td style={{ height: 28 }}>{!isBlankPrint ? db.user : ''}</td><td></td><td></td></tr>
+              <tr><td style={{ height: 20 }}>{!isBlankPrint ? db.user : ''}</td><td></td><td></td></tr>
             </tbody>
           </table>
         </div>
 
         {/* 1. 기본사항 */}
         <div className="print-sec-title">1. 기본 사항</div>
-        <table className="print-tbl" style={{ marginBottom: 8 }}>
+        <table className="print-tbl" style={{ marginBottom: 4 }}>
           <tbody>
             <tr>
               <th>품명</th>
@@ -889,7 +889,7 @@ export default function Production() {
         </table>
 
         {/* 2. 원재료 투입량 & 3. 점도/토출 확인 (좌우 배치) */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1.25fr 1fr', gap: 8, marginBottom: 8 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1.25fr 1fr', gap: 6, marginBottom: 4 }}>
           <div>
             <div className="print-sec-title">2. 원재료 투입량 (Lot 포함)</div>
             <table className="print-tbl">
@@ -920,7 +920,7 @@ export default function Production() {
 
           <div>
             <div className="print-sec-title">3. 점도 확인 (PS / ℃)</div>
-            <table className="print-tbl" style={{ marginBottom: 8 }}>
+            <table className="print-tbl" style={{ marginBottom: 4 }}>
               <thead>
                 <tr>
                   <th>구분</th>
@@ -931,7 +931,7 @@ export default function Production() {
                 <tr>
                   <th>점도 (PS)</th>
                   {VISC_LABELS.map((lb, i) => (
-                    <td key={lb} className="r" style={{ height: 22 }}>
+                    <td key={lb} className="r" style={{ height: 18 }}>
                       {!isBlankPrint && run && run.viscosity[i]?.ps ? run.viscosity[i].ps : ''}
                     </td>
                   ))}
@@ -939,7 +939,7 @@ export default function Production() {
                 <tr>
                   <th>온도 (℃)</th>
                   {VISC_LABELS.map((lb, i) => (
-                    <td key={lb} className="r" style={{ height: 22 }}>
+                    <td key={lb} className="r" style={{ height: 18 }}>
                       {!isBlankPrint && run && run.viscosity[i]?.tempC ? run.viscosity[i].tempC : ''}
                     </td>
                   ))}
@@ -974,7 +974,7 @@ export default function Production() {
               </tbody>
             </table>
 
-            <div className="print-sec-title" style={{ marginTop: 8 }}>5. 유리섬유 체크 (중량법)</div>
+            <div className="print-sec-title" style={{ marginTop: 4 }}>5. 유리섬유 체크 (중량법)</div>
             <table className="print-tbl">
               <tbody>
                 <tr>
@@ -994,7 +994,7 @@ export default function Production() {
         <div className="print-sec-title">
           6. SMC 생산 확인 (권장 설정값 — 폭: {activeSetting?.input.widthMm ?? activeProduct?.widthMm ?? 1100}mm / 속도: {activeSetting?.input.speed ?? 10}m/min / D/B 1·2: {activeSetting ? fmt(activeSetting.output.boxGapMm, 2) : '-'}mm / 컷터 1·2: {activeSetting ? activeSetting.output.cutterRpm.map((r) => (r === null ? 'OFF' : fmt(r, 1))).join('/') : '-'} RPM / 목표단중: {activeSetting?.input.arealKgM2 ?? activeProduct?.arealKgM2 ?? 4.6}kg/㎡)
         </div>
-        <table className="print-tbl" style={{ marginBottom: 8 }}>
+        <table className="print-tbl roll-tbl" style={{ marginBottom: 4 }}>
           <thead>
             <tr>
               <th style={{ width: 28 }}>No</th>
@@ -1018,7 +1018,7 @@ export default function Production() {
               const r = !isBlankPrint && run ? run.rolls[i] : undefined
               return (
                 <tr key={i}>
-                  <td style={{ textAlign: 'center', height: 20 }}>{i + 1}</td>
+                  <td style={{ textAlign: 'center', height: 16 }}>{i + 1}</td>
                   <td className="r">{r?.widthMm || ''}</td>
                   <td className="r">{r?.speed || ''}</td>
                   <td className="r">{r?.db1 || ''}</td>
@@ -1046,7 +1046,7 @@ export default function Production() {
         </table>
 
         {/* 7. 출고 전 품질 확인 & 8. 특이사항 */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: 8 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: 6 }}>
           <div>
             <div className="print-sec-title">7. 출고 전 최종 품질 확인</div>
             <table className="print-tbl">
@@ -1068,7 +1068,7 @@ export default function Production() {
           </div>
           <div>
             <div className="print-sec-title">8. 특이사항 및 조치내역</div>
-            <div style={{ border: '1px solid #000', minHeight: 112, padding: 6, fontSize: 11 }}>
+            <div className="notes-box" style={{ border: '1px solid #000', minHeight: 48, padding: 4, fontSize: 10 }}>
               {!isBlankPrint && run ? run.notes : ''}
             </div>
           </div>

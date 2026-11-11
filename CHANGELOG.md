@@ -3,6 +3,15 @@
 모든 주요 기능 추가, UI/UX 개편, 엑셀 원본 데이터 통합 및 아키텍처 변경 이력을 기록합니다.
 어느 AI 에이전트(Claude, Gemini, Cursor, Copilot 등)나 개발자가 이어서 작업하더라도 본 문서와 `git log`를 통해 전체 맥락을 즉시 파악할 수 있습니다.
 
+## [v0.4.1] - 2026-11-11
+### Fixed — SMC 일일 생산일지 인쇄 양식 A4 1장 완벽 맞춤 (Single-Page Fit)
+- **A4 단일 페이지 인쇄 최적화 (`src/styles.css`, `src/pages/Production.tsx`)**:
+  - 인쇄 시 '7. 출고 전 최종 품질 확인'의 하단 2개 항목(이물질 혼입, 포장)이 2페이지로 잘려 넘어가는 문제 해결
+  - `@media print` 규칙에 `.prod-print-sheet` 전용 고밀도 레이아웃(컴팩트 패딩 `1.2px 3px`, 폰트 `8.8px~9.2px`, 페이지 브레이크 방지 `page-break-inside: avoid !important`) 적용
+  - 인쇄 여백 최적화 (`margin: 5mm 7mm`), 롤 생산 표 및 특이사항 상자 높이/마진을 최적화하여 1~12롤 생산 기록 및 8대 항목이 A4 딱 1장에 깔끔하게 수록되도록 개선
+- **단일 실행 파일 배포본 동기화**:
+  - `SMC_system.html` 및 `SMC_system_EN.html` 최신 빌드 동기화 완료
+
 ---
 
 ## [v0.4.0] - 2026-10-15
