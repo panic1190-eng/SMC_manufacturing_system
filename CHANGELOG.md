@@ -3,6 +3,16 @@
 모든 주요 기능 추가, UI/UX 개편, 엑셀 원본 데이터 통합 및 아키텍처 변경 이력을 기록합니다.
 어느 AI 에이전트(Claude, Gemini, Cursor, Copilot 등)나 개발자가 이어서 작업하더라도 본 문서와 `git log`를 통해 전체 맥락을 즉시 파악할 수 있습니다.
 
+## [v0.5.1] - 2026-11-11
+### Enhanced — A4 세로 용지 100% 가득 채움 (Full A4 Vertical Fill, 274mm) 레이아웃 완성
+- **A4 세로 용지 하단 여백 제로화 (`src/pages/Production.tsx`, `src/styles.css`)**:
+  - 기존 인쇄 시 용지 하단 약 35%가 빈 여백으로 남던 현상을 해결하여 상단부터 하단 끝까지(274mm) 알차게 채워지도록 고도화
+  - `.prod-print-sheet`에 `min-height: 274mm`, `display: flex`, `flex-direction: column`, `justify-content: space-between` 적용
+  - 현장 수기 기록 편의를 위해 원재료 표(`20.5px`), 롤 생산 확인 표(`21px`), 점도·토출량 표(`24~25px`), 출고 전 품질확인 표(`21.5px`)의 행 높이를 약 1.48배 확대
+  - 좌측 `2. 원재료 투입량`과 우측 `3~5. 점도/토출/유리섬유` 영역의 상하 끝선을 1:1 대칭 일치(`align-items: stretch`)
+  - 5번 유리섬유 체크 표를 2행 구조(유리섬유 Lot, 로빙 규격 2400Tex/1", 전체 사용량, 실측 함량)로 확장하여 가독성 향상
+  - 최하단에 사내 품질경영시스템 공식 문서 푸터(`FORM NO: SMC-PRD-F01 Rev.03`) 탑재
+
 ## [v0.5.0] - 2026-11-11
 ### Added & Enhanced — 전사 표준화 릴리즈: 화면 전역 고시인성 버전 뱃지 및 브라우저 탭 연동
 - **화면 전역 고시인성 버전 배지 탑재 (`src/App.tsx`, `src/pages/Dashboard.tsx`, `src/pages/Rules.tsx`)**:

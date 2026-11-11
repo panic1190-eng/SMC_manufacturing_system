@@ -3,7 +3,7 @@ import { update, useDB } from './store'
 import { ENGINE_VERSION } from './engine/calc'
 import { translateText, useDomTranslator, useLang } from './i18n'
 
-export const APP_VERSION = 'v0.5.0'
+export const APP_VERSION = 'v0.5.1'
 import Dashboard from './pages/Dashboard'
 import Materials from './pages/Materials'
 import Recipes from './pages/Recipes'

@@ -4,6 +4,7 @@ import { update, uid, useDB } from '../store'
 import { fmt, matLabel, matOf, nextLotNo, recipeName, today } from '../util'
 import { glassFraction, scaleRecipe } from '../engine/calc'
 import type { DB, ProductionRun, Roll } from '../types'
+import { APP_VERSION } from '../App'
 
 const VISC_LABELS = ['초기', '5분', '10분', '15분', '20분', '25분']
 const PRESHIP: [string, string, string][] = [
@@ -833,43 +834,43 @@ export default function Production() {
         })()}
       </div>
 
-      {/* 상업용 A4 SMC 일일 생산일지 표준 서식 (SMC-PRD-F01, Single Page Fit) */}
+      {/* 상업용 A4 SMC 일일 생산일지 표준 서식 (SMC-PRD-F01, Full A4 Vertical Fill) */}
       <section className="card printable printonly prod-print-sheet">
         {/* 상단 공식 헤더 */}
-        <div className="doc-banner" style={{ marginBottom: 4, padding: '4px 8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', border: '2px solid #0f172a', background: '#ffffff' }}>
-          <div className="doc-brand" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div className="doc-banner" style={{ marginBottom: 6, padding: '7px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', border: '2px solid #0f172a', background: '#ffffff' }}>
+          <div className="doc-brand" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             {db.settings.companyLogo ? (
-              <img src={db.settings.companyLogo} alt="logo" className="doc-logo" style={{ maxHeight: 30 }} />
+              <img src={db.settings.companyLogo} alt="logo" className="doc-logo" style={{ maxHeight: 38 }} />
             ) : (
-              <div className="brand-mark" style={{ width: 30, height: 30, fontSize: 11, fontWeight: 900, borderRadius: 5, background: '#1e3a8a', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>SMC</div>
+              <div className="brand-mark" style={{ width: 38, height: 38, fontSize: 13, fontWeight: 900, borderRadius: 6, background: '#1e3a8a', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>SMC</div>
             )}
             <div>
-              <div className="doc-title" style={{ fontSize: 16, fontWeight: 900, letterSpacing: '-0.02em', color: '#0f172a' }}>
+              <div className="doc-title" style={{ fontSize: 18, fontWeight: 900, letterSpacing: '-0.02em', color: '#0f172a', lineHeight: 1.2 }}>
                 SMC 일일 생산일지 {isBlankPrint ? '(현장 기록용 표준양식)' : ''}
               </div>
-              <div className="doc-sub" style={{ fontSize: 9, color: '#475569', fontWeight: 600 }}>
-                {db.settings.companyName || 'SMC MANUFACTURING'} · STANDARD PRODUCTION LOG
+              <div className="doc-sub" style={{ fontSize: 9.5, color: '#475569', fontWeight: 600, marginTop: 2 }}>
+                {db.settings.companyName || 'SMC MANUFACTURING'} · STANDARD PRODUCTION LOG ({APP_VERSION})
               </div>
             </div>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <div style={{ textAlign: 'right', fontSize: 8.5, color: '#475569', lineHeight: 1.3 }}>
+            <div style={{ textAlign: 'right', fontSize: 8.5, color: '#334155', lineHeight: 1.4, whiteSpace: 'nowrap' }}>
               <div><b>문서번호:</b> SMC-PRD-F01</div>
               <div><b>개정번호:</b> Rev.03 (2026)</div>
-              <div><b>보존연한:</b> 영구 (품질기록)</div>
+              <div><b>보존연한:</b> 5년 (품질기록)</div>
             </div>
-            <table style={{ width: 165, borderCollapse: 'collapse', border: '1.5px solid #0f172a', textAlign: 'center', flexShrink: 0, margin: 0, background: '#fff' }}>
+            <table style={{ width: 180, borderCollapse: 'collapse', border: '1.5px solid #0f172a', textAlign: 'center', flexShrink: 0, margin: 0, background: '#fff' }}>
               <thead>
-                <tr style={{ background: '#f1f5f9', height: 16 }}>
-                  <th style={{ border: '1px solid #0f172a', fontSize: 9, width: 55, padding: 0, fontWeight: 700 }}>작성</th>
-                  <th style={{ border: '1px solid #0f172a', fontSize: 9, width: 55, padding: 0, fontWeight: 700 }}>검토</th>
-                  <th style={{ border: '1px solid #0f172a', fontSize: 9, width: 55, padding: 0, fontWeight: 700 }}>승인</th>
+                <tr style={{ background: '#f1f5f9', height: 18 }}>
+                  <th style={{ border: '1px solid #0f172a', fontSize: 9.5, width: 60, padding: 0, fontWeight: 800 }}>작성</th>
+                  <th style={{ border: '1px solid #0f172a', fontSize: 9.5, width: 60, padding: 0, fontWeight: 800 }}>검토</th>
+                  <th style={{ border: '1px solid #0f172a', fontSize: 9.5, width: 60, padding: 0, fontWeight: 800 }}>승인</th>
                 </tr>
               </thead>
               <tbody>
-                <tr style={{ height: 25 }}>
-                  <td style={{ border: '1px solid #0f172a', fontSize: 9.5, padding: 0, fontWeight: 600 }}>{!isBlankPrint ? db.user : ''}</td>
+                <tr style={{ height: 32 }}>
+                  <td style={{ border: '1px solid #0f172a', fontSize: 10, padding: 0, fontWeight: 700 }}>{!isBlankPrint ? db.user : ''}</td>
                   <td style={{ border: '1px solid #0f172a', padding: 0 }}></td>
                   <td style={{ border: '1px solid #0f172a', padding: 0 }}></td>
                 </tr>
@@ -879,57 +880,59 @@ export default function Production() {
         </div>
 
         {/* 1. 기본사항 */}
-        <div className="print-sec-title">1. 기본 사항 (공정 개요)</div>
-        <table className="print-tbl" style={{ marginBottom: 4, width: '100%', tableLayout: 'fixed' }}>
-          <tbody>
-            <tr>
-              <th style={{ width: 70 }}>품명</th>
-              <td style={{ width: 170 }}><b>{activeProduct?.name ?? 'SMC 물탱크용'}</b> <span style={{ fontSize: 8.5, color: '#475569' }}>({run?.productCode || activeProduct?.code || ''})</span></td>
-              <th style={{ width: 68 }}>제품 LOT</th>
-              <td style={{ width: 145 }}><b>{!isBlankPrint && run ? run.lotNo : `${db.settings.siteCode}______-__`}</b></td>
-              <th style={{ width: 65 }}>생산일자</th>
-              <td>{!isBlankPrint && run ? run.date : '2026-  -  '}</td>
-              <th style={{ width: 70 }}>생산 Batch</th>
-              <td>{activeMix ? `${activeMix.batches} Batch (${activeMix.no})` : '____ Batch'}</td>
-            </tr>
-            <tr>
-              <th>온도 (℃)</th>
-              <td>{!isBlankPrint && run && run.tempC ? `${run.tempC} ℃` : '        ℃'}</td>
-              <th>습도 (%)</th>
-              <td>{!isBlankPrint && run && run.humidity ? `${run.humidity} %` : '        %'}</td>
-              <th>날씨</th>
-              <td>{!isBlankPrint && run ? run.weather : '맑음 / 흐림 / 비'}</td>
-              <th>작업인원</th>
-              <td>{!isBlankPrint && run ? `${run.workers} 명` : '      명'}</td>
-            </tr>
-            <tr>
-              <th>비가동·특기</th>
-              <td colSpan={7}>{!isBlankPrint && run ? run.downtime : '준비·청소 및 특이사항 없음'}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div>
+          <div className="print-sec-title">1. 기본 사항 (공정 개요)</div>
+          <table className="print-tbl" style={{ marginBottom: 6, width: '100%', tableLayout: 'fixed' }}>
+            <tbody>
+              <tr style={{ height: 22 }}>
+                <th style={{ width: 68 }}>품명</th>
+                <td style={{ width: 175 }}><b>{activeProduct?.name ?? 'SMC 물탱크용'}</b> <span style={{ fontSize: 8.5, color: '#475569' }}>({run?.productCode || activeProduct?.code || ''})</span></td>
+                <th style={{ width: 66 }}>제품 LOT</th>
+                <td style={{ width: 130 }}><b>{!isBlankPrint && run ? run.lotNo : `${db.settings.siteCode}______-__`}</b></td>
+                <th style={{ width: 62 }}>생산일자</th>
+                <td style={{ width: 90 }}>{!isBlankPrint && run ? run.date : '2026-  -  '}</td>
+                <th style={{ width: 68 }}>생산 Batch</th>
+                <td>{activeMix ? `${activeMix.batches}B (${activeMix.no})` : '____ Batch'}</td>
+              </tr>
+              <tr style={{ height: 22 }}>
+                <th>온도 (℃)</th>
+                <td>{!isBlankPrint && run && run.tempC ? `${run.tempC} ℃` : '          ℃'}</td>
+                <th>습도 (%)</th>
+                <td>{!isBlankPrint && run && run.humidity ? `${run.humidity} %` : '          %'}</td>
+                <th>날씨</th>
+                <td>{!isBlankPrint && run ? run.weather : '맑음 / 흐림 / 비'}</td>
+                <th>작업인원</th>
+                <td>{!isBlankPrint && run ? `${run.workers} 명` : '        명'}</td>
+              </tr>
+              <tr style={{ height: 22 }}>
+                <th>비가동·특기</th>
+                <td colSpan={7}>{!isBlankPrint && run ? run.downtime : '준비·청소 및 특이사항 없음 (정상 가동)'}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-        {/* 2. 원재료 투입량 & 3. 점도/토출 확인 (좌우 배치) */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: 5, marginBottom: 4 }}>
-          <div>
+        {/* 2. 원재료 투입량 & 3~5. 점도/토출/유리섬유 확인 (좌우 높이 100% 일치 배치) */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1.28fr 1fr', gap: 8, marginBottom: 6, alignItems: 'stretch' }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div className="print-sec-title">2. 원재료 투입량 (Lot 추적)</div>
-            <table className="print-tbl" style={{ width: '100%', tableLayout: 'fixed' }}>
+            <table className="print-tbl" style={{ width: '100%', tableLayout: 'fixed', flex: 1, marginBottom: 0 }}>
               <thead>
-                <tr>
+                <tr style={{ height: 21 }}>
                   <th style={{ width: 24 }}>No</th>
                   <th>품목 (규격)</th>
-                  <th style={{ width: 95 }}>원재료 Lot No.</th>
-                  <th className="r" style={{ width: 55 }}>1배치(Kg)</th>
-                  <th className="r" style={{ width: 58 }}>지시량(Kg)</th>
-                  <th className="r" style={{ width: 58 }}>실사용(Kg)</th>
+                  <th style={{ width: 82 }}>원재료 Lot No.</th>
+                  <th className="r" style={{ width: 52 }}>1배치(Kg)</th>
+                  <th className="r" style={{ width: 54 }}>지시량(Kg)</th>
+                  <th className="r" style={{ width: 54 }}>실사용(Kg)</th>
                 </tr>
               </thead>
               <tbody>
                 {blankLines.map((l, i) => (
-                  <tr key={l.materialId} style={{ height: 14 }}>
-                    <td style={{ textAlign: 'center', fontSize: 8 }}>{i + 1}</td>
-                    <td style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{matLabel(db, l.materialId)}</td>
-                    <td style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 7.5 }}>{!isBlankPrint && run ? (run.matLots[l.materialId] ?? '') : ''}</td>
+                  <tr key={l.materialId} style={{ height: 20.5 }}>
+                    <td style={{ textAlign: 'center', fontSize: 9 }}>{i + 1}</td>
+                    <td style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontWeight: 600 }}>{matLabel(db, l.materialId)}</td>
+                    <td style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 8.5 }}>{!isBlankPrint && run ? (run.matLots[l.materialId] ?? '') : ''}</td>
                     <td className="r">{fmt(l.batchKg, 1)}</td>
                     <td className="r">{fmt(l.totalKg, 1)}</td>
                     <td className="r">{!isBlankPrint && run && run.actualUse[l.materialId] ? fmt(run.actualUse[l.materialId], 1) : ''}</td>
@@ -939,151 +942,168 @@ export default function Production() {
             </table>
           </div>
 
-          <div>
-            <div className="print-sec-title">3. 점도 확인 (PS / ℃)</div>
-            <table className="print-tbl" style={{ marginBottom: 3, width: '100%', tableLayout: 'fixed' }}>
-              <thead>
-                <tr>
-                  <th style={{ width: 55 }}>구분</th>
-                  {VISC_LABELS.map((lb) => <th key={lb} className="r">{lb}</th>)}
-                </tr>
-              </thead>
-              <tbody>
-                <tr style={{ height: 15 }}>
-                  <th>점도 (PS)</th>
-                  {VISC_LABELS.map((lb, i) => (
-                    <td key={lb} className="r">
-                      {!isBlankPrint && run && run.viscosity[i]?.ps ? run.viscosity[i].ps : ''}
-                    </td>
-                  ))}
-                </tr>
-                <tr style={{ height: 15 }}>
-                  <th>온도 (℃)</th>
-                  {VISC_LABELS.map((lb, i) => (
-                    <td key={lb} className="r">
-                      {!isBlankPrint && run && run.viscosity[i]?.tempC ? run.viscosity[i].tempC : ''}
-                    </td>
-                  ))}
-                </tr>
-              </tbody>
-            </table>
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div>
+              <div className="print-sec-title">3. 점도 확인 (PS / ℃)</div>
+              <table className="print-tbl" style={{ marginBottom: 6, width: '100%', tableLayout: 'fixed' }}>
+                <thead>
+                  <tr style={{ height: 21 }}>
+                    <th style={{ width: 56 }}>구분</th>
+                    {VISC_LABELS.map((lb) => <th key={lb} className="r">{lb}</th>)}
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style={{ height: 25 }}>
+                    <th>점도 (PS)</th>
+                    {VISC_LABELS.map((lb, i) => (
+                      <td key={lb} className="r">
+                        {!isBlankPrint && run && run.viscosity[i]?.ps ? run.viscosity[i].ps : ''}
+                      </td>
+                    ))}
+                  </tr>
+                  <tr style={{ height: 25 }}>
+                    <th>온도 (℃)</th>
+                    {VISC_LABELS.map((lb, i) => (
+                      <td key={lb} className="r">
+                        {!isBlankPrint && run && run.viscosity[i]?.tempC ? run.viscosity[i].tempC : ''}
+                      </td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
-            <div className="print-sec-title">4. 펌프 3계통 토출량 확인</div>
-            <table className="print-tbl" style={{ width: '100%', tableLayout: 'fixed', marginBottom: 3 }}>
-              <thead>
-                <tr><th>항목</th><th className="r" style={{ width: 65 }}>목표(자동)</th><th className="r" style={{ width: 60 }}>실측</th><th style={{ width: 50 }}>단위</th></tr>
-              </thead>
-              <tbody>
-                <tr style={{ height: 14.5 }}>
-                  <td>컴파운드 (Paste A)</td>
-                  <td className="r">{activeSetting ? fmt(activeSetting.output.pumpA, 2) : '-'}</td>
-                  <td className="r">{!isBlankPrint && run && run.dischargeMeasured.compound ? fmt(run.dischargeMeasured.compound, 2) : ''}</td>
-                  <td>kg/min</td>
-                </tr>
-                <tr style={{ height: 14.5 }}>
-                  <td>증점제 (MgO)</td>
-                  <td className="r">{activeSetting ? fmt(activeSetting.output.pumpMgO, 1) : '-'}</td>
-                  <td className="r">{!isBlankPrint && run && run.dischargeMeasured.mgo ? fmt(run.dischargeMeasured.mgo, 1) : ''}</td>
-                  <td>g/min</td>
-                </tr>
-                <tr style={{ height: 14.5 }}>
-                  <td>조색제 (Color)</td>
-                  <td className="r">{activeSetting ? fmt(activeSetting.output.pumpColor, 1) : '-'}</td>
-                  <td className="r">{!isBlankPrint && run && run.dischargeMeasured.color ? fmt(run.dischargeMeasured.color, 1) : ''}</td>
-                  <td>g/min</td>
-                </tr>
-              </tbody>
-            </table>
+            <div>
+              <div className="print-sec-title">4. 펌프 3계통 토출량 확인</div>
+              <table className="print-tbl" style={{ width: '100%', tableLayout: 'fixed', marginBottom: 6 }}>
+                <thead>
+                  <tr style={{ height: 21 }}>
+                    <th>항목</th>
+                    <th className="r" style={{ width: 68 }}>목표(자동)</th>
+                    <th className="r" style={{ width: 64 }}>실측</th>
+                    <th style={{ width: 50 }}>단위</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style={{ height: 24 }}>
+                    <td><b>컴파운드 (Paste A)</b></td>
+                    <td className="r">{activeSetting ? fmt(activeSetting.output.pumpA, 2) : '-'}</td>
+                    <td className="r">{!isBlankPrint && run && run.dischargeMeasured.compound ? fmt(run.dischargeMeasured.compound, 2) : ''}</td>
+                    <td style={{ textAlign: 'center' }}>kg/min</td>
+                  </tr>
+                  <tr style={{ height: 24 }}>
+                    <td><b>증점제 (MgO)</b></td>
+                    <td className="r">{activeSetting ? fmt(activeSetting.output.pumpMgO, 1) : '-'}</td>
+                    <td className="r">{!isBlankPrint && run && run.dischargeMeasured.mgo ? fmt(run.dischargeMeasured.mgo, 1) : ''}</td>
+                    <td style={{ textAlign: 'center' }}>g/min</td>
+                  </tr>
+                  <tr style={{ height: 24 }}>
+                    <td><b>조색제 (Color)</b></td>
+                    <td className="r">{activeSetting ? fmt(activeSetting.output.pumpColor, 1) : '-'}</td>
+                    <td className="r">{!isBlankPrint && run && run.dischargeMeasured.color ? fmt(run.dischargeMeasured.color, 1) : ''}</td>
+                    <td style={{ textAlign: 'center' }}>g/min</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
-            <div className="print-sec-title">5. 유리섬유 체크 (중량법)</div>
-            <table className="print-tbl" style={{ width: '100%', tableLayout: 'fixed' }}>
-              <tbody>
-                <tr style={{ height: 16 }}>
-                  <th style={{ width: 80 }}>유리섬유 Lot</th>
-                  <td>{!isBlankPrint && run ? run.glassLots : ''}</td>
-                  <th style={{ width: 85 }}>전체사용량</th>
-                  <td style={{ width: 58 }} className="r">{!isBlankPrint && run && run.glassRollKg ? `${fmt(run.glassRollKg, 1)}kg` : ''}</td>
-                  <th style={{ width: 75 }}>실측함량</th>
-                  <td style={{ width: 55 }} className="r">{!isBlankPrint && run && run.sampleGfPct !== undefined ? `${run.sampleGfPct}%` : '    %'}</td>
-                </tr>
-              </tbody>
-            </table>
+            <div>
+              <div className="print-sec-title">5. 유리섬유 체크 (중량법)</div>
+              <table className="print-tbl" style={{ width: '100%', tableLayout: 'fixed', marginBottom: 0 }}>
+                <tbody>
+                  <tr style={{ height: 25 }}>
+                    <th style={{ width: 78 }}>유리섬유 Lot</th>
+                    <td>{!isBlankPrint && run ? run.glassLots : ''}</td>
+                    <th style={{ width: 78 }}>로빙 규격</th>
+                    <td style={{ width: 85, textAlign: 'center' }}>{db.machine.tex}Tex / {db.machine.cutInch}&quot;</td>
+                  </tr>
+                  <tr style={{ height: 25 }}>
+                    <th>전체 사용량</th>
+                    <td className="r">{!isBlankPrint && run && run.glassRollKg ? `${fmt(run.glassRollKg, 1)} kg` : '          kg'}</td>
+                    <th>실측 함량</th>
+                    <td className="r">{!isBlankPrint && run && run.sampleGfPct !== undefined ? `${run.sampleGfPct} %` : '          %'}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
         {/* 6. 롤별 생산 확인 */}
-        <div className="print-sec-title">
-          6. SMC 생산 확인 (권장 설정값 — 폭: {activeSetting?.input.widthMm ?? activeProduct?.widthMm ?? 1100}mm / 속도: {activeSetting?.input.speed ?? 10}m/min / D/B 1·2: {activeSetting ? fmt(activeSetting.output.boxGapMm, 2) : '-'}mm / 컷터 1·2: {activeSetting ? activeSetting.output.cutterRpm.map((r) => (r === null ? 'OFF' : fmt(r, 1))).join('/') : '-'} RPM / 목표단중: {activeSetting?.input.arealKgM2 ?? activeProduct?.arealKgM2 ?? 4.6}kg/㎡)
+        <div>
+          <div className="print-sec-title">
+            6. SMC 생산 확인 (권장 설정값 — 폭: {activeSetting?.input.widthMm ?? activeProduct?.widthMm ?? 1100}mm / 속도: {activeSetting?.input.speed ?? 10}m/min / D/B 1·2: {activeSetting ? fmt(activeSetting.output.boxGapMm, 2) : '-'}mm / 컷터 1·2: {activeSetting ? activeSetting.output.cutterRpm.map((r) => (r === null ? 'OFF' : fmt(r, 1))).join('/') : '-'} RPM / 목표단중: {activeSetting?.input.arealKgM2 ?? activeProduct?.arealKgM2 ?? 4.6}kg/㎡)
+          </div>
+          <table className="print-tbl roll-tbl" style={{ marginBottom: 6, width: '100%', tableLayout: 'fixed' }}>
+            <thead>
+              <tr style={{ height: 22 }}>
+                <th style={{ width: 26 }}>No</th>
+                <th className="r" style={{ width: 62 }}>제품폭(mm)</th>
+                <th className="r" style={{ width: 60 }}>속도(m/m)</th>
+                <th className="r" style={{ width: 58 }}>D/B 1(mm)</th>
+                <th className="r" style={{ width: 58 }}>D/B 2(mm)</th>
+                <th className="r" style={{ width: 60 }}>컷터1 RPM</th>
+                <th className="r" style={{ width: 60 }}>컷터2 RPM</th>
+                <th className="r" style={{ width: 62 }}>단중(kg/㎡)</th>
+                <th className="r" style={{ width: 54 }}>두께(mm)</th>
+                <th className="r" style={{ width: 50 }}>함침(%)</th>
+                <th className="r" style={{ width: 65 }}>총중량(kg)</th>
+                <th className="r" style={{ width: 65 }}>실중량(kg)</th>
+                <th className="r" style={{ width: 58 }}>말기점도</th>
+                <th>비고</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Array.from({ length: Math.max(12, !isBlankPrint && run ? run.rolls.length : 12) }).map((_, i) => {
+                const r = !isBlankPrint && run ? run.rolls[i] : undefined
+                return (
+                  <tr key={i} style={{ height: 21 }}>
+                    <td style={{ textAlign: 'center', fontWeight: 600 }}>{i + 1}</td>
+                    <td className="r">{r?.widthMm || ''}</td>
+                    <td className="r">{r?.speed || ''}</td>
+                    <td className="r">{r?.db1 || ''}</td>
+                    <td className="r">{r?.db2 || ''}</td>
+                    <td className="r">{r?.cut1 || ''}</td>
+                    <td className="r">{r?.cut2 || ''}</td>
+                    <td className="r">{r?.arealKgM2 || ''}</td>
+                    <td className="r">{r?.thicknessMm || ''}</td>
+                    <td className="r">{r?.impregPct || ''}</td>
+                    <td className="r">{r?.grossKg || ''}</td>
+                    <td className="r">{r?.netKg || ''}</td>
+                    <td className="r">{r?.finalVisc || ''}</td>
+                    <td style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r?.note || ''}</td>
+                  </tr>
+                )
+              })}
+              <tr style={{ height: 22, background: '#f8fafc' }}>
+                <th colSpan={10} className="r" style={{ fontWeight: 800 }}>합계 (TTL)</th>
+                <th className="r" style={{ fontWeight: 800 }}>{!isBlankPrint && run ? fmt(run.rolls.reduce((s, x) => s + x.grossKg, 0), 1) : ''}</th>
+                <th className="r" style={{ fontWeight: 800 }}>{!isBlankPrint && run ? fmt(run.rolls.reduce((s, x) => s + x.netKg, 0), 1) : ''}</th>
+                <th style={{ textAlign: 'center', fontWeight: 800 }}>생산수율</th>
+                <th style={{ textAlign: 'center', fontWeight: 800 }}>
+                  {!isBlankPrint && run && run.rolls.reduce((s, x) => s + x.netKg, 0) > 0 && activeMix?.lines
+                    ? `${fmt((run.rolls.reduce((s, x) => s + x.netKg, 0) / (activeMix.lines.reduce((s, x) => s + x.planKg, 0) * (activeMix.batches || 1))) * 100, 1)}%`
+                    : '       %'}
+                </th>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <table className="print-tbl roll-tbl" style={{ marginBottom: 3, width: '100%', tableLayout: 'fixed' }}>
-          <thead>
-            <tr>
-              <th style={{ width: 24 }}>No</th>
-              <th className="r" style={{ width: 62 }}>제품폭(mm)</th>
-              <th className="r" style={{ width: 62 }}>속도(m/m)</th>
-              <th className="r" style={{ width: 58 }}>D/B 1(mm)</th>
-              <th className="r" style={{ width: 58 }}>D/B 2(mm)</th>
-              <th className="r" style={{ width: 60 }}>컷터1 RPM</th>
-              <th className="r" style={{ width: 60 }}>컷터2 RPM</th>
-              <th className="r" style={{ width: 62 }}>단중(kg/㎡)</th>
-              <th className="r" style={{ width: 54 }}>두께(mm)</th>
-              <th className="r" style={{ width: 50 }}>함침(%)</th>
-              <th className="r" style={{ width: 65 }}>총중량(kg)</th>
-              <th className="r" style={{ width: 65 }}>실중량(kg)</th>
-              <th className="r" style={{ width: 58 }}>말기점도</th>
-              <th>비고</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Array.from({ length: Math.max(12, !isBlankPrint && run ? run.rolls.length : 12) }).map((_, i) => {
-              const r = !isBlankPrint && run ? run.rolls[i] : undefined
-              return (
-                <tr key={i} style={{ height: 14 }}>
-                  <td style={{ textAlign: 'center', fontSize: 8 }}>{i + 1}</td>
-                  <td className="r">{r?.widthMm || ''}</td>
-                  <td className="r">{r?.speed || ''}</td>
-                  <td className="r">{r?.db1 || ''}</td>
-                  <td className="r">{r?.db2 || ''}</td>
-                  <td className="r">{r?.cut1 || ''}</td>
-                  <td className="r">{r?.cut2 || ''}</td>
-                  <td className="r">{r?.arealKgM2 || ''}</td>
-                  <td className="r">{r?.thicknessMm || ''}</td>
-                  <td className="r">{r?.impregPct || ''}</td>
-                  <td className="r">{r?.grossKg || ''}</td>
-                  <td className="r">{r?.netKg || ''}</td>
-                  <td className="r">{r?.finalVisc || ''}</td>
-                  <td style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r?.note || ''}</td>
-                </tr>
-              )
-            })}
-            <tr style={{ height: 16, background: '#f8fafc' }}>
-              <th colSpan={10} className="r" style={{ fontWeight: 800 }}>합계 (TTL)</th>
-              <th className="r" style={{ fontWeight: 800 }}>{!isBlankPrint && run ? fmt(run.rolls.reduce((s, x) => s + x.grossKg, 0), 1) : ''}</th>
-              <th className="r" style={{ fontWeight: 800 }}>{!isBlankPrint && run ? fmt(run.rolls.reduce((s, x) => s + x.netKg, 0), 1) : ''}</th>
-              <th style={{ textAlign: 'center', fontWeight: 800 }}>생산수율</th>
-              <th style={{ textAlign: 'center', fontWeight: 800 }}>
-                {!isBlankPrint && run && run.rolls.reduce((s, x) => s + x.netKg, 0) > 0 && activeMix?.lines
-                  ? `${fmt((run.rolls.reduce((s, x) => s + x.netKg, 0) / (activeMix.lines.reduce((s, x) => s + x.planKg, 0) * (activeMix.batches || 1))) * 100, 1)}%`
-                  : '       %'}
-              </th>
-            </tr>
-          </tbody>
-        </table>
 
-        {/* 7. 출고 전 품질 확인 & 8. 특이사항 (A4 1장에 100% 온전하게 들어오는 상업용 규격) */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1.25fr 1fr', gap: 5 }}>
-          <div>
+        {/* 7. 출고 전 품질 확인 & 8. 특이사항 */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1.28fr 1fr', gap: 8, alignItems: 'stretch' }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div className="print-sec-title">7. 출고 전 최종 품질 확인 (5대 필수 점검)</div>
-            <table className="print-tbl" style={{ width: '100%', tableLayout: 'fixed' }}>
+            <table className="print-tbl" style={{ width: '100%', tableLayout: 'fixed', flex: 1, marginBottom: 0 }}>
               <thead>
-                <tr><th style={{ width: 85 }}>점검 항목</th><th>관리 기준</th><th style={{ width: 75 }}>판정(O/X)</th></tr>
+                <tr style={{ height: 21 }}><th style={{ width: 92 }}>점검 항목</th><th>관리 기준</th><th style={{ width: 82 }}>판정(O/X)</th></tr>
               </thead>
               <tbody>
                 {PRESHIP.map(([k, name, std]) => (
-                  <tr key={k} style={{ height: 14.5 }}>
+                  <tr key={k} style={{ height: 21.5 }}>
                     <td><b>{name}</b></td>
-                    <td style={{ fontSize: 8, color: '#334155' }}>{std}</td>
-                    <td style={{ textAlign: 'center', fontSize: 8 }}>
+                    <td style={{ color: '#334155' }}>{std}</td>
+                    <td style={{ textAlign: 'center', fontWeight: 600 }}>
                       {!isBlankPrint && run && run.preShip[k] ? (run.preShip[k] === 'ok' ? '■합격 □불합격' : '□합격 ■불합격') : '□합격  □불합격'}
                     </td>
                   </tr>
@@ -1093,13 +1113,20 @@ export default function Production() {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div className="print-sec-title">8. 특이사항 및 조치내역 (품질·안전)</div>
-            <div className="notes-box" style={{ border: '1px solid #334155', flex: 1, minHeight: 74, padding: '3px 6px', fontSize: 8.5, background: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div className="notes-box" style={{ border: '1px solid #334155', flex: 1, minHeight: 128, padding: '6px 8px', fontSize: 9.5, background: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <div>{!isBlankPrint && run ? run.notes : ''}</div>
-              <div style={{ fontSize: 7.5, color: '#64748b', textAlign: 'right', borderTop: '1px dashed #cbd5e1', paddingTop: 2 }}>
+              <div style={{ fontSize: 8, color: '#475569', textAlign: 'right', borderTop: '1px dashed #cbd5e1', paddingTop: 4 }}>
                 ※ 부적합 또는 공정 이상 발생 시 즉시 라인 정지 후 책임자 보고 및 서명 날인
               </div>
             </div>
           </div>
+        </div>
+
+        {/* 최하단 공식 문서 푸터 */}
+        <div style={{ marginTop: 6, paddingTop: 4, borderTop: '1.5px solid #0f172a', display: 'flex', justifyContent: 'space-between', fontSize: 8, color: '#475569', fontWeight: 600 }}>
+          <span>FORM NO: SMC-PRD-F01 (Rev.03)</span>
+          <span>본 문서는 사내 품질경영시스템 표준 양식이므로 무단 반출 및 임의 개정을 금합니다.</span>
+          <span>{db.settings.companyName || 'SMC MANUFACTURING'} · A4 (210×297mm)</span>
         </div>
       </section>
     </>
