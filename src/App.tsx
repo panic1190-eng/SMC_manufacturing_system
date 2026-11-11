@@ -2,6 +2,8 @@ import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { update, useDB } from './store'
 import { ENGINE_VERSION } from './engine/calc'
 import { translateText, useDomTranslator, useLang } from './i18n'
+
+export const APP_VERSION = 'v0.4.1'
 import Dashboard from './pages/Dashboard'
 import Materials from './pages/Materials'
 import Recipes from './pages/Recipes'
@@ -275,7 +277,7 @@ export default function App() {
           </div>
           <div className="side-foot-meta">
             <span>{db.settings.siteCode} SITE</span>
-            <span>{ENGINE_VERSION}</span>
+            <span>App {APP_VERSION} · {ENGINE_VERSION}</span>
           </div>
         </div>
       </nav>
@@ -291,6 +293,29 @@ export default function App() {
             <p className="top-sub">{tx(cur.sub)}</p>
           </div>
           <div className="top-actions">
+            <a
+              href="./portal.html"
+              target="_blank"
+              title={tx('공식 배포 센터 및 버전 릴리즈 노트 열기')}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 7,
+                background: 'linear-gradient(135deg, rgba(37, 99, 235, 0.18) 0%, rgba(30, 58, 138, 0.28) 100%)',
+                border: '1px solid rgba(96, 165, 250, 0.45)',
+                color: '#93c5fd',
+                padding: '5px 12px',
+                borderRadius: 999,
+                fontSize: 12.5,
+                fontWeight: 700,
+                textDecoration: 'none',
+                letterSpacing: '0.03em',
+                boxShadow: '0 2px 10px rgba(37, 99, 235, 0.25)',
+              }}
+            >
+              <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#10b981', boxShadow: '0 0 8px #10b981' }} />
+              <span>{APP_VERSION}</span>
+            </a>
             <div className="seg-tabs" style={{ padding: 3, borderRadius: 999 }}>
               <button
                 className={lang === 'ko' ? 'on' : ''}
