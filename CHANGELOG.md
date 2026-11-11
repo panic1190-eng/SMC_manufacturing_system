@@ -4,7 +4,13 @@
 어느 AI 에이전트(Claude, Gemini, Cursor, Copilot 등)나 개발자가 이어서 작업하더라도 본 문서와 `git log`를 통해 전체 맥락을 즉시 파악할 수 있습니다.
 
 ## [v0.4.1] - 2026-11-11
-### Fixed — SMC 일일 생산일지 인쇄 양식 A4 1장 완벽 맞춤 (Single-Page Fit)
+### Added & Fixed — 공식 배포 센터(portal.html), Vercel 클라우드 연동 및 인쇄 A4 1장 최적화
+- **공식 배포 포털 센터 구축 (`portal.html`, 바탕화면 바로가기 탑재)**:
+  - 전사 임직원 및 현장 작업자를 위한 공식 배포 웹 포털 사이트 구축
+  - 한국어 단독본(`SMC_system.html`), 영문본(`SMC_system_EN.html`), Vercel 초고속 CDN, GitHub Pages 통합 링크 제공
+- **Vercel 클라우드 배포 구성 (`vercel.json`)**:
+  - 초고속 Anycast Edge 글로벌 CDN 호스팅 설정 및 공식 포털 등록 (`smc-manufacturing-system.vercel.app`)
+  - 원클릭 자동 배포 파이프라인(`deploy.ps1`, `npm run release`) 구축
 - **A4 단일 페이지 인쇄 최적화 (`src/styles.css`, `src/pages/Production.tsx`)**:
   - 인쇄 시 '7. 출고 전 최종 품질 확인'의 하단 2개 항목(이물질 혼입, 포장)이 2페이지로 잘려 넘어가는 문제 해결
   - `@media print` 규칙에 `.prod-print-sheet` 전용 고밀도 레이아웃(컴팩트 패딩 `1.2px 3px`, 폰트 `8.8px~9.2px`, 페이지 브레이크 방지 `page-break-inside: avoid !important`) 적용

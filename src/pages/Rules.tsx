@@ -174,6 +174,9 @@ export default function Rules() {
           <a href="./portal.html" target="_blank" className="btn pri" style={{ textDecoration: 'none' }}>
             🌐 공식 배포 사이트 열기 (portal.html)
           </a>
+          <a href="https://smc-manufacturing-system.vercel.app" target="_blank" className="btn" style={{ textDecoration: 'none', background: '#000', color: '#fff', border: '1px solid #444' }}>
+            ▲ Vercel 클라우드 라이브 접속
+          </a>
           <a href="./SMC_system.html" download="SMC_system.html" className="btn" style={{ textDecoration: 'none' }}>
             📥 한국어 단독 파일 다운로드 (v0.4.1)
           </a>
