@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMC 기술·생산관리 시스템 — 공식 배포 센터</title>
+  <style>
+    :root {
+      --bg: #090e1a;
+      --card-bg: rgba(17, 24, 39, 0.75);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --text-main: #f8fafc;
+      --text-sub: #94a3b8;
+      --text-mute: #64748b;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --primary-glow: rgba(59, 130, 246, 0.35);
+      --success: #10b981;
+      --success-glow: rgba(16, 185, 129, 0.25);
+      --font: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.18) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.12) 0px, transparent 50%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      font-family: var(--font);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding: 0 20px 80px;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    /* Top Navigation Bar */
+    header.top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 48px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-logo {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #4338ca 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 14px;
+      letter-spacing: 0.05em;
+      color: #fff;
+      box-shadow: 0 4px 18px var(--primary-glow);
+    }
+    .brand-title h1 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .brand-title p {
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 9999px;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #10b981;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 30px 0 60px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #93c5fd;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      margin-bottom: 20px;
+    }
+    .hero h2 {
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 18px;
+      background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 16.5px;
+      color: var(--text-sub);
+      max-width: 680px;
+      margin: 0 auto 36px;
+    }
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 13px 28px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+    .btn-primary {
+      background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 20px var(--primary-glow);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 26px rgba(37, 99, 235, 0.5);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--card-border);
+      color: var(--text-main);
+      backdrop-filter: blur(10px);
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    /* Grid Cards */
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin: 48px 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title::before {
+      content: '';
+      width: 4px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 28px;
+      backdrop-filter: blur(12px);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card:hover {
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-4px);
+    }
+    .card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .card-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .card p {
+      font-size: 13.5px;
+      color: var(--text-sub);
+      line-height: 1.6;
+      margin-bottom: 22px;
+    }
+    .card-meta {
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--text-mute);
+      padding: 12px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      margin-bottom: 18px;
+    }
+    .card-meta span b {
+      color: var(--text-sub);
+    }
+
+    /* Release Notes Box */
+    .release-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 30px;
+      backdrop-filter: blur(12px);
+    }
+    .release-item {
+      padding-bottom: 22px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+    .release-item:last-child {
+      padding-bottom: 0;
+      margin-bottom: 0;
+      border-bottom: none;
+    }
+    .release-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .ver-tag {
+      background: var(--primary);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 6px;
+    }
+    .ver-date {
+      font-size: 12.5px;
+      color: var(--text-mute);
+    }
+    .ver-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .release-list {
+      list-style: none;
+      padding-left: 0;
+      font-size: 13.5px;
+      color: var(--text-sub);
+    }
+    .release-list li {
+      position: relative;
+      padding-left: 18px;
+      margin-bottom: 6px;
+      line-height: 1.5;
+    }
+    .release-list li::before {
+      content: '•';
+      position: absolute;
+      left: 4px;
+      color: var(--primary);
+      font-weight: 900;
+    }
+
+    /* Deployment Channels Summary Table */
+    .deploy-table-wrap {
+      overflow-x: auto;
+      margin-top: 16px;
+    }
+    table.deploy-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      color: var(--text-sub);
+    }
+    table.deploy-table th, table.deploy-table td {
+      padding: 14px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      text-align: left;
+    }
+    table.deploy-table th {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-main);
+      font-weight: 700;
+    }
+    table.deploy-table td.highlight {
+      color: #38bdf8;
+      font-weight: 600;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 1px solid var(--card-border);
+      text-align: center;
+      font-size: 12.5px;
+      color: var(--text-mute);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="top-bar">
+      <div class="brand">
+        <div class="brand-logo">SMC</div>
+        <div class="brand-title">
+          <h1>SMC 기술·생산관리 시스템</h1>
+          <p>공식 배포 및 릴리즈 센터 (Official Release Portal)</p>
+        </div>
+      </div>
+      <div class="status-badge">
+        <div class="status-dot"></div>
+        <span>시스템 정상 가동 중 (v0.4.1)</span>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-badge">🚀 2026 최신 릴리즈 v0.4.1 정식 배포</div>
+      <h2>SMC 제조 공정 통합 관리 시스템</h2>
+      <p>
+        처방 관리부터 닥터블레이드 유량 계산, 단계별 전자서명 배합지시서, 
+        A4 단일 페이지 인쇄 생산일지, 완제품 로트(FIFO) 및 라벨 발행까지 하나로 통합된 차세대 솔루션입니다.
+      </p>
+      <div class="hero-actions">
+        <a href="./SMC_system.html" class="btn btn-primary" target="_blank">
+          🖥️ 한국어 시스템 바로 실행
+        </a>
+        <a href="./SMC_system_EN.html" class="btn btn-secondary" target="_blank">
+          🌐 Global Edition (English)
+        </a>
+        <a href="https://jhk113074-hue.github.io/SMC_manufacturing_system/" class="btn btn-secondary" target="_blank">
+          ☁️ 온라인 라이브 웹사이트
+        </a>
+      </div>
+    </section>
+
+    <!-- Download & Execution Options -->
+    <h3 class="section-title">공식 배포본 다운로드 및 사용 채널</h3>
+    <div class="cards-grid">
+      <!-- Card 1 -->
+      <div class="card">
+        <div>
+          <div class="card-head">
+            <div class="card-icon" style="background: rgba(37, 99, 235, 0.15); color: #60a5fa;">🇰🇷</div>
+            <span class="status-badge" style="font-size: 11px; padding: 4px 10px;">현장 추천</span>
+          </div>
+          <h3>SMC_system.html (한국어 정식 배포본)</h3>
+          <p>서버나 데이터베이스 설치 없이 브라우저에서 더블클릭만으로 즉시 구동되는 완전 오프라인 단일 실행 파일입니다.</p>
+        </div>
+        <div>
+          <div class="card-meta">
+            <span>버전: <b>v0.4.1</b></span>
+            <span>용량: <b>380 KB</b></span>
+            <span>형태: <b>단일 HTML</b></span>
+          </div>
+          <a href="./SMC_system.html" download="SMC_system.html" class="btn btn-primary" style="width: 100%;">
+            📥 한국어 단독 파일 다운로드
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <div>
+          <div class="card-head">
+            <div class="card-icon" style="background: rgba(16, 185, 129, 0.15); color: #34d399;">🇺🇸</div>
+            <span class="status-badge" style="font-size: 11px; padding: 4px 10px; background: rgba(59, 130, 246, 0.12); color: #93c5fd; border-color: rgba(59, 130, 246, 0.3);">Global</span>
+          </div>
+          <h3>SMC_system_EN.html (English Global)</h3>
+          <p>해외 공장(베트남, 인도, 글로벌 지사) 및 외국인 엔지니어를 위한 100% 영문 전용 단독 실행 파일입니다.</p>
+        </div>
+        <div>
+          <div class="card-meta">
+            <span>버전: <b>v0.4.1</b></span>
+            <span>용량: <b>380 KB</b></span>
+            <span>Language: <b>English</b></span>
+          </div>
+          <a href="./SMC_system_EN.html" download="SMC_system_EN.html" class="btn btn-secondary" style="width: 100%;">
+            📥 Download English Edition
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <div>
+          <div class="card-head">
+            <div class="card-icon" style="background: rgba(168, 85, 247, 0.15); color: #c084fc;">🌐</div>
+            <span class="status-badge" style="font-size: 11px; padding: 4px 10px; background: rgba(168, 85, 247, 0.12); color: #d8b4fe; border-color: rgba(168, 85, 247, 0.3);">GitHub Pages</span>
+          </div>
+          <h3>클라우드 라이브 웹 서비스</h3>
+          <p>모바일, 태블릿, 사무실 PC 등 어느 기기에서나 설치 없이 URL 하나로 접속할 수 있는 실시간 웹 서비스입니다.</p>
+        </div>
+        <div>
+          <div class="card-meta">
+            <span>호스팅: <b>GitHub CI/CD</b></span>
+            <span>보안: <b>HTTPS 암호화</b></span>
+          </div>
+          <a href="https://jhk113074-hue.github.io/SMC_manufacturing_system/" target="_blank" class="btn btn-secondary" style="width: 100%;">
+            🔗 라이브 웹사이트 열기
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Release History -->
+    <h3 class="section-title">버전 히스토리 & 릴리즈 노트 (Changelog)</h3>
+    <div class="release-box">
+      <!-- v0.4.1 -->
+      <div class="release-item">
+        <div class="release-header">
+          <span class="ver-tag">v0.4.1</span>
+          <span class="ver-date">2026-11-11</span>
+          <span class="ver-title">SMC 일일 생산일지 인쇄 양식 A4 1장 완벽 맞춤 (Single-Page Fit)</span>
+        </div>
+        <ul class="release-list">
+          <li><b>A4 1장 단일 인쇄 최적화</b>: 인쇄 시 '7. 출고 전 최종 품질 확인'의 하단 2개 항목(이물질 혼입, 포장)이 2페이지로 잘려 넘어가는 문제 해결</li>
+          <li><b>고밀도 인쇄 레이아웃</b>: 롤 생산 표(1~12롤) 및 특이사항 상자 높이/마진을 최적화하여 1~8번 전 섹션이 A4 1장에 꼭 맞도록 개편</li>
+          <li><b>단일 실행본 동기화</b>: <code>SMC_system.html</code> 및 <code>SMC_system_EN.html</code> 최신 빌드 동시 배포</li>
+        </ul>
+      </div>
+
+      <!-- v0.4.0 -->
+      <div class="release-item">
+        <div class="release-header">
+          <span class="ver-tag" style="background: #475569;">v0.4.0</span>
+          <span class="ver-date">2026-10-15</span>
+          <span class="ver-title">글로벌 영문(English) 완벽 지원 및 GitHub Pages CI/CD 자동 배포</span>
+        </div>
+        <ul class="release-list">
+          <li>한국어 / 영어 원클릭 실시간 전환 지원 (전 메뉴, 대시보드, 9종 처방, 설정값 계산기, 배합지시서, 라벨 등)</li>
+          <li>GitHub 원격 저장소 연동 및 GitHub Actions 라이브 자동 배포 파이프라인 구축</li>
+        </ul>
+      </div>
+
+      <!-- v0.3.0 -->
+      <div class="release-item">
+        <div class="release-header">
+          <span class="ver-tag" style="background: #475569;">v0.3.0</span>
+          <span class="ver-date">2026-10-15</span>
+          <span class="ver-title">현장 엑셀 4개 파일 전 시트 100% 무손실 통합</span>
+        </div>
+        <ul class="release-list">
+          <li>SMC 생산 공정 표준서(SMC-STD-001) 및 예방보전 가이드 수록 (한국어 / 베트남어 병기)</li>
+          <li>수기 생산일지 사진 촬영 스마트 스캔(AI OCR 자동 인식) 탑재</li>
+          <li>물탱크 배합 총 제조원가(원재료·부재료·노무비·경비) 계산서 및 9종 처방 수록</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Deployment Matrix -->
+    <h3 class="section-title">배포 방식별 운영 가이드</h3>
+    <div class="release-box">
+      <div class="deploy-table-wrap">
+        <table class="deploy-table">
+          <thead>
+            <tr>
+              <th>배포 채널</th>
+              <th>적합한 대상 및 장소</th>
+              <th>실행 및 접근 방법</th>
+              <th>네트워크 요구사항</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="highlight">단일 HTML 파일</td>
+              <td>배합실/성형라인 현장 PC, 태블릿, 외부 협력사</td>
+              <td>USB 복사 또는 사내 공유폴더에서 더블클릭</td>
+              <td><b>완전 오프라인 (인터넷 불필요)</b></td>
+            </tr>
+            <tr>
+              <td class="highlight">온라인 GitHub Pages</td>
+              <td>사무실, 연구소, 출장지, 모바일 스마트폰</td>
+              <td>공식 웹 URL 접속 (<a href="https://jhk113074-hue.github.io/SMC_manufacturing_system/" target="_blank" style="color: #60a5fa;">링크</a>)</td>
+              <td>인터넷 연결 필요 (HTTPS)</td>
+            </tr>
+            <tr>
+              <td class="highlight">사내 인트라넷 (NAS/IIS)</td>
+              <td>사내 폐쇄망 환경의 모든 전사 임직원</td>
+              <td>사내 웹서버에 파일 복사 후 사내 IP 접속</td>
+              <td>사내 로컬 네트워크(LAN)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>© 2026 SMC 제조 기술·생산관리 시스템 · All Rights Reserved.</p>
+      <p style="margin-top: 4px;">문의 및 기술지원: 영신ACC 생산기술팀 / 품질보증팀</p>
+    </footer>
+  </div>
+
+</body>
+</html>

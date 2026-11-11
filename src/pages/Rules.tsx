@@ -166,6 +166,26 @@ export default function Rules() {
         </div>
       </Card>
 
+      <Card title="공식 배포 센터 · 최신 파일 다운로드 (v0.4.1)">
+        <p className="mute" style={{ marginBottom: 12 }}>
+          본 시스템의 공식 배포 사이트, 단일 실행 파일(한국어/영문) 다운로드 및 최신 버전 릴리즈 노트를 확인합니다.
+        </p>
+        <div className="row" style={{ flexWrap: 'wrap', gap: 8 }}>
+          <a href="./portal.html" target="_blank" className="btn pri" style={{ textDecoration: 'none' }}>
+            🌐 공식 배포 사이트 열기 (portal.html)
+          </a>
+          <a href="./SMC_system.html" download="SMC_system.html" className="btn" style={{ textDecoration: 'none' }}>
+            📥 한국어 단독 파일 다운로드 (v0.4.1)
+          </a>
+          <a href="./SMC_system_EN.html" download="SMC_system_EN.html" className="btn" style={{ textDecoration: 'none' }}>
+            📥 English Edition Download
+          </a>
+          <a href="https://jhk113074-hue.github.io/SMC_manufacturing_system/" target="_blank" className="btn" style={{ textDecoration: 'none' }}>
+            ☁️ GitHub Pages 라이브 접속
+          </a>
+        </div>
+      </Card>
+
       <Card title="데이터 백업·복원">
         <div className="row">
           <button className="btn pri" onClick={() => download(`smc-backup-${new Date().toISOString().slice(0, 10)}.json`, exportJSON())}>백업 파일 내려받기</button>
