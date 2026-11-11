@@ -74,14 +74,16 @@ if ($status) {
 
 # 5. 원격 저장소 푸시 (GitHub Pages CI/CD)
 Write-Host "`n[Step 5/5] GitHub Pages 원격 배포 푸시..." -ForegroundColor Yellow
-$pushOut = & $gitCmd -c core.askPass=echo push origin main 2>&1
+$prevEAP = $ErrorActionPreference
+$ErrorActionPreference = "SilentlyContinue"
+& $gitCmd push origin main
+$ErrorActionPreference = $prevEAP
+
 if ($LASTEXITCODE -eq 0) {
-    Write-Host "`n🎉 GitHub Pages 배포 푸시가 성공적으로 완료되었습니다!" -ForegroundColor Green
-    Write-Host "👉 라이브 서비스: https://jhk113074-hue.github.io/SMC_manufacturing_system/" -ForegroundColor Cyan
+    Write-Host "`n🎉 GitHub 배포 푸시가 성공적으로 완료되었습니다!" -ForegroundColor Green
+    Write-Host "👉 저장소: https://github.com/panic1190-eng/SMC_manufacturing_system" -ForegroundColor Cyan
 } else {
-    Write-Host "`nℹ️ 로컬 빌드 및 버전 관리가 완료되었습니다." -ForegroundColor Green
-    Write-Host "  * 원격 배포(GitHub)를 위해 1회 계정 로그인이 필요합니다." -ForegroundColor Yellow
-    Write-Host "  * 로컬 단일 실행본(SMC_system.html)은 이미 최신으로 완벽히 반영되었습니다." -ForegroundColor Cyan
+    Write-Host "`n⚠️ 원격 푸시 상태 확인 필요" -ForegroundColor Yellow
 }
 
 Write-Host "`n==========================================================" -ForegroundColor Cyan
