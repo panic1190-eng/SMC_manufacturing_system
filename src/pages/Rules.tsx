@@ -183,7 +183,7 @@ export default function Rules() {
           <a href="./SMC_system_EN.html" download="SMC_system_EN.html" className="btn" style={{ textDecoration: 'none' }}>
             📥 English Edition Download
           </a>
-          <a href="https://jhk113074-hue.github.io/SMC_manufacturing_system/" target="_blank" className="btn" style={{ textDecoration: 'none' }}>
+          <a href="https://panic1190-eng.github.io/SMC_manufacturing_system/" target="_blank" className="btn" style={{ textDecoration: 'none' }}>
             ☁️ GitHub Pages 라이브 접속
           </a>
         </div>
